@@ -1,7 +1,11 @@
+
 # docker-send-only-postfix
 Docker container with Postfix configured in send-only mode and OpenDKIM.
 Postfix will accept emails from all private IP addresses on all network interfaces.
 All emails send from Postfix to other email servers are encrypted using standard TLS.
+
+## Updated to use Sendgrid 
+https://sendgrid.com/docs/for-developers/sending-email/postfix/#
 
 ## Setup
 In order to use this container, you will need to setup OpenDKIM.

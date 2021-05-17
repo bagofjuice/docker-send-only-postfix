@@ -9,8 +9,15 @@ mydestination =
 # subnet == Postfix should forward mail from SMTP clients in the same IP subnetworks as the local machine
 mynetworks_style = subnet
 
-# direct delivery to Internet
-relayhost =
+# sendgrid config from https://sendgrid.com/docs/for-developers/sending-email/postfix/
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+header_size_limit = 4096000
+
+# delivery via sendgrid
+relayhost = [smtp.sendgrid.net]:587
 
 # accept emails from all network interfaces (we will restrict this using Docker networks)
 inet_interfaces = all
@@ -21,7 +28,7 @@ smtp_tls_mandatory_ciphers = high
 
 # do not require encryption from the client to this server
 smtpd_tls_security_level = none
-smtpd_relay_restrictions =  permit_mynetworks, defer_unauth_destination
+smtpd_relay_restrictions = permit_mynetworks, defer_unauth_destination
 
 # opendkim
 milter_protocol = 2
